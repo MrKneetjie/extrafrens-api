@@ -14,9 +14,8 @@ app.post('/api/createUser', async (req, res) => {
     // await newUser.save();
     if (req.body.name) {
         res.send("Name is filled");
-    } else {
-        res.send("Name is empty");
     }
+    res.send("Name is empty");
 });
 
 module.exports = app;
