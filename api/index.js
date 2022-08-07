@@ -9,13 +9,11 @@ app.get('/api', (req, res) => {
 
 app.post('/api/createUser', async (req, res) => {
     await connectDB();
-    
-    console.log("test");
-    console.log(req.body);
+
     // const newUser = new Account({ name: req.body.name, email: req.body.email, password: req.body.password, thumb: req.body.thumb, role: req.body.role });
     // await newUser.save();
 
-    res.send(req.body);
+    res.send(req.body.name);
 });
 
 module.exports = app;
