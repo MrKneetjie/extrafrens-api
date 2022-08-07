@@ -7,7 +7,7 @@ app.get('/api', (req, res) => {
     res.send('Hello World!');
 });
 
-app.post('/api/createUser', async (req, res) => {
+const createUser = async (req, res) => {
     const { body } = req;
     await connectDB();
 
@@ -22,6 +22,6 @@ app.post('/api/createUser', async (req, res) => {
     } else {
         res.send("Name is empty");
     }
-});
+};
 
-module.exports = app;
+module.exports = { app, createUser };
