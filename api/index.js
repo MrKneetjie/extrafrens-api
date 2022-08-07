@@ -7,7 +7,7 @@ app.get('/api', (req, res) => {
     res.send('Hello World!');
 });
 
-app.post('/createUser', async (req, res) => {
+app.post('/api/createUser', async (req, res) => {
     await connectDB();
     
     // const newUser = new Account({ name: req.body.name, email: req.body.email, password: req.body.password, thumb: req.body.thumb, role: req.body.role });
