@@ -16,10 +16,12 @@ app.post('/api/createUser', async (req, res) => {
     if (body) {
         if (body.name) {
             res.send("Name is filled");
+        } else {
+            res.send("Body not empty");
         }
-        res.send("Body not empty");
+    } else {
+        res.send("Name is empty");
     }
-    res.send("Name is empty");
 });
 
 module.exports = app;
