@@ -1,13 +1,13 @@
 const app = require('express')();
 
-const { User } = require('./models.js');
+const { Account } = require('./models.js');
 const connectDB = require('./mongoose.js');
 
 app.get('/api', async (req, res) => {
     await connectDB();
 
     console.log("Adding user to DB");
-    const newUser = new User({ username: "ExtraFrens", refreshToken: "API" });
+    const newUser = new Account({ username: "ExtraFrens", password: "TEST" });
     
     await newUser.save();
     console.log("Done!");
