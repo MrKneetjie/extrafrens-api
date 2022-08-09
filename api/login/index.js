@@ -22,28 +22,26 @@ const allowCors = fn => async (req, res) => {
 async function handler(req, res) {
     await connectDB();
     
-    if (!req.body.name || !req.body.email || !req.body.password || !req.body.role || !req.body.thumb) {
+    if (!req.body.email || !req.body.password) {
         res.status(400).json({
             message: "Missing required fields",
         });
     } else {
-        await Account.create({
-            name: req.body.name,
+        await Account.findOne({
             email: req.body.email,
             password: req.body.password,
-            role: req.body.role,
-            thumb: req.body.thumb,
         }).then((account) => {
-            res.status(200).json({
-                message: "Account created successfully",
-                account: account,
-            });
-        }).catch((err) => {
-            res.status(500).json({
-                message: "Error creating account",
-                error: err,
-            });
-        });
+            if (account) {
+                res.status(200).json({
+                    message: "Account found",
+                    account: account,
+                });
+            } else {
+                res.status(404).json({
+                    message: "Account not found",
+                });
+            }
+        }
     }
 }
 
