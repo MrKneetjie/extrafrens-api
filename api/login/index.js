@@ -41,7 +41,7 @@ async function handler(req, res) {
                     message: "Account not found",
                 });
             }
-        }
+        });
     }
 }
 
