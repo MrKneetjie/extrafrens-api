@@ -1,4 +1,4 @@
-import { Account } from "../models";
+import { Post } from "../models";
 const connectDB = require('../mongoose.js');
 
 const allowCors = fn => async (req, res) => {
@@ -21,29 +21,18 @@ const allowCors = fn => async (req, res) => {
 async function handler(req, res) {
     await connectDB();
     
-    if (!req.body.name || !req.body.email || !req.body.password || !req.body.role || !req.body.thumb) {
-        res.status(400).json({
-            message: "Missing required fields",
+    await Post.find().toArray()
+    .then((posts) => {
+        res.status(200).json({
+            message: "Posts fetched successfully",
+            posts: posts,
         });
-    } else {
-        await Account.create({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            role: req.body.role,
-            thumb: req.body.thumb,
-        }).then((account) => {
-            res.status(200).json({
-                message: "Account created successfully",
-                account: account,
-            });
-        }).catch((err) => {
-            res.status(500).json({
-                message: "Error creating account",
-                error: err,
-            });
+    }).catch((err) => {
+        res.status(500).json({
+            message: "Error fetching posts",
+            error: err,
         });
-    }
+    });
 }
 
 module.exports = allowCors(handler)

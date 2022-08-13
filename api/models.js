@@ -8,6 +8,17 @@ const accountSchema = new mongoose.Schema({
     role: String,
 });
 
-const Account = mongoose.model('Account', accountSchema);
+const postSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+    banner: String,
+    userId: String,
+    views: Number,
+    comments: Number,
+});
 
-module.exports = { Account };
+
+const Account = mongoose.model('Account', accountSchema);
+const Post = mongoose.model('Post', postSchema);
+
+module.exports = { Account, Post };
