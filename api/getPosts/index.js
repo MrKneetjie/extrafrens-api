@@ -21,7 +21,7 @@ const allowCors = fn => async (req, res) => {
 async function handler(req, res) {
     await connectDB();
     
-    await Post.find().toArray()
+    await Post.find({}).limit(20)
     .then((posts) => {
         res.status(200).json({
             message: "Posts fetched successfully",
