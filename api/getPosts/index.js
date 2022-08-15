@@ -21,7 +21,7 @@ const allowCors = fn => async (req, res) => {
 async function handler(req, res) {
     await connectDB();
     
-    if (!req.body.account) {
+    if (!req.hasOwnProperty('body')) {
         await Post.find({}).limit(20)
         .then((posts) => {
             res.status(200).json({
