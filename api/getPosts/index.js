@@ -21,18 +21,33 @@ const allowCors = fn => async (req, res) => {
 async function handler(req, res) {
     await connectDB();
     
-    await Post.find({}).limit(20)
-    .then((posts) => {
-        res.status(200).json({
-            message: "Posts fetched successfully",
-            posts: posts,
+    if (!req.body.account) {
+        await Post.find({}).limit(20)
+        .then((posts) => {
+            res.status(200).json({
+                message: "Posts fetched successfully",
+                posts: posts,
+            });
+        }).catch((err) => {
+            res.status(500).json({
+                message: "Error fetching posts",
+                error: err,
+            });
         });
-    }).catch((err) => {
-        res.status(500).json({
-            message: "Error fetching posts",
-            error: err,
+    } else {
+        await Post.find({ userId: req.body.account }).limit(20)
+        .then((posts) => {
+            res.status(200).json({
+                message: "Posts fetched successfully",
+                posts: posts,
+            });
+        }).catch((err) => {
+            res.status(500).json({
+                message: "Error fetching posts",
+                error: err,
+            });
         });
-    });
+    }
 }
 
 module.exports = allowCors(handler)
