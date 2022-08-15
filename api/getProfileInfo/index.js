@@ -26,7 +26,7 @@ async function handler(req, res) {
             message: "Missing required fields",
         });
     } else {
-        await Account.findOne({ id: req.body.account })
+        await Account.findById(req.body.account)
         .then((account) => {
             res.status(200).json({
                 message: "Posts fetched successfully",
