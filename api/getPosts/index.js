@@ -24,9 +24,11 @@ async function handler(req, res) {
     if (!req.body.hasOwnProperty('account')) {
         await Post.find({}).limit(20)
         .then((posts) => {
+            const account = allowCors(getProfileInfo(posts[0].userId));
             res.status(200).json({
                 message: "Posts fetched successfully",
                 posts: posts,
+                account: account,
             });
         }).catch((err) => {
             res.status(500).json({
@@ -37,9 +39,11 @@ async function handler(req, res) {
     } else {
         await Post.find({ userId: req.body.account }).limit(20)
         .then((posts) => {
+            const account = allowCors(getProfileInfo(posts[0].userId));
             res.status(200).json({
                 message: "Posts fetched successfully",
                 posts: posts,
+                account: account,
             });
         }).catch((err) => {
             res.status(500).json({
@@ -48,6 +52,17 @@ async function handler(req, res) {
             });
         });
     }
+}
+
+async function getProfileInfo(userId) {
+    await connectDB();
+    
+    await Account.findById(userId)
+    .then((account) => {
+        return account;
+    }).catch((err) => {
+        return undefined;
+    });
 }
 
 module.exports = allowCors(handler)
