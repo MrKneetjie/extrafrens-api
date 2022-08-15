@@ -1,4 +1,4 @@
-import { Post } from "../models";
+import { Post, Account } from "../models";
 const connectDB = require('../mongoose.js');
 
 const allowCors = fn => async (req, res) => {
