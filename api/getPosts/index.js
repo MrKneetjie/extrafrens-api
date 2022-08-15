@@ -24,18 +24,18 @@ async function handler(req, res) {
     if (!req.body.hasOwnProperty('account')) {
         await Post.find({}).limit(20)
         .then((posts) => {
-            posts.map((post) => {
-                const account = await Account.findById(post.userId);
-
-                return {
-                    ...post,
-                    account
-                }
-            });
-
-            res.status(200).json({
-                message: "Posts fetched successfully",
-                posts: posts,
+            await Account.findById(posts[0].userId)
+            .then((account) => {
+                res.status(200).json({
+                    message: "Posts fetched successfully",
+                    account: account,
+                    posts: posts,
+                });
+            }).catch((err) => {
+                res.status(500).json({
+                    message: "Error fetching posts",
+                    error: err,
+                });
             });
         }).catch((err) => {
             res.status(500).json({
@@ -46,15 +46,6 @@ async function handler(req, res) {
     } else {
         await Post.find({ userId: req.body.account }).limit(20)
         .then((posts) => {
-            posts.map((post) => {
-                const account = await Account.findById(post.userId);
-
-                return {
-                    ...post,
-                    account
-                }
-            });
-            
             res.status(200).json({
                 message: "Posts fetched successfully",
                 posts: posts,
