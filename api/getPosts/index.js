@@ -1,4 +1,4 @@
-import { Post } from "../models";
+import { Account, Post } from "../models";
 const connectDB = require('../mongoose.js');
 
 const allowCors = fn => async (req, res) => {
@@ -24,6 +24,15 @@ async function handler(req, res) {
     if (!req.body.hasOwnProperty('account')) {
         await Post.find({}).limit(20)
         .then((posts) => {
+            posts.map((post) => {
+                const account = await Account.findById(post.userId);
+
+                return {
+                    ...post,
+                    account
+                }
+            });
+
             res.status(200).json({
                 message: "Posts fetched successfully",
                 posts: posts,
@@ -37,6 +46,15 @@ async function handler(req, res) {
     } else {
         await Post.find({ userId: req.body.account }).limit(20)
         .then((posts) => {
+            posts.map((post) => {
+                const account = await Account.findById(post.userId);
+
+                return {
+                    ...post,
+                    account
+                }
+            });
+            
             res.status(200).json({
                 message: "Posts fetched successfully",
                 posts: posts,
