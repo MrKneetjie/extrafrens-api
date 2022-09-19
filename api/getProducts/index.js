@@ -1,4 +1,4 @@
-import { Account } from "../models";
+import { Product } from "../models";
 const connectDB = require('../mongoose.js');
 
 const allowCors = fn => async (req, res) => {
@@ -21,24 +21,18 @@ const allowCors = fn => async (req, res) => {
 async function handler(req, res) {
     await connectDB();
     
-    if (!req.body.account) {
-        res.status(400).json({
-            message: "Missing required fields",
+    await Product.find().limit(20)
+    .then((products) => {
+        res.status(200).json({
+            message: "Products fetched successfully",
+            products: products,
         });
-    } else {
-        await Account.findById(req.body.account)
-        .then((account) => {
-            res.status(200).json({
-                message: "Posts fetched successfully",
-                account: account,
-            });
-        }).catch((err) => {
-            res.status(500).json({
-                message: "Error fetching posts",
-                error: err,
-            });
+    }).catch((err) => {
+        res.status(500).json({
+            message: "Error fetching products",
+            error: err,
         });
-    }
+    });
 }
 
 module.exports = allowCors(handler)

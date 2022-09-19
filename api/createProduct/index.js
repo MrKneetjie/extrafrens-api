@@ -1,4 +1,4 @@
-import { Account } from "../models";
+import { Product } from "../models";
 const connectDB = require('../mongoose.js');
 
 const allowCors = fn => async (req, res) => {
@@ -20,26 +20,26 @@ const allowCors = fn => async (req, res) => {
   
 async function handler(req, res) {
     await connectDB();
-    
-    if (!req.body.name || !req.body.email || !req.body.password || !req.body.role || !req.body.thumb) {
+
+    if (!req.body.name || !req.body.seller_name || !req.body.seller_avatar || !req.body.description || !req.body.price) {
         res.status(400).json({
             message: "Missing required fields",
         });
     } else {
-        await Account.create({
+        await Product.create({
             name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            role: req.body.role,
-            thumb: req.body.thumb,
-        }).then((account) => {
+            seller_name: req.body.seller_name,
+            seller_avatar: req.body.seller_avatar,
+            description: req.body.description,
+            price: req.body.price,
+        }).then((product) => {
             res.status(200).json({
-                message: "Account created successfully",
-                account: account,
+                message: "Product created successfully",
+                product: product,
             });
         }).catch((err) => {
             res.status(500).json({
-                message: "Error creating account",
+                message: "Error creating product",
                 error: err,
             });
         });

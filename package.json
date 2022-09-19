@@ -1,5 +1,5 @@
 {
-  "name": "extrafrens-api",
+  "name": "verified-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MrKneetjie/extrafrens-api.git"
+    "url": "git+https://github.com/MrKneetjie/verified-api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MrKneetjie/extrafrens-api/issues"
+    "url": "https://github.com/MrKneetjie/verified-api/issues"
   },
-  "homepage": "https://github.com/MrKneetjie/extrafrens-api#readme",
+  "homepage": "https://github.com/MrKneetjie/verified-api#readme",
   "dependencies": {
     "express": "^4.18.1",
     "mongoose": "^6.5.1"

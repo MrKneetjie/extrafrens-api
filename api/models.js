@@ -1,24 +1,13 @@
 const mongoose = require('mongoose');
 
-const accountSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
     name: String,
-    email: String,
-    password: String,
-    thumb: String,
-    role: String,
-});
-
-const postSchema = new mongoose.Schema({
-    title: String,
+    seller_name: String,
+    seller_avatar: String,
     description: String,
-    banner: String,
-    userId: String,
-    views: Number,
-    comments: Number,
+    price: Number,
 });
 
+const Product = mongoose.model('Product', productSchema);
 
-const Account = mongoose.model('Account', accountSchema);
-const Post = mongoose.model('Post', postSchema);
-
-module.exports = { Account, Post };
+module.exports = { Product };
